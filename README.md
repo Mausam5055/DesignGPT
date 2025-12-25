@@ -80,18 +80,52 @@ graph TD
     DB -->|Real-time Event| UI[Client Dashboard]
 ```
 
-### Component Stack
+### 🏗️ Detailed Technology Stack Strategy
 
-| Layer             | Technology                  | Purpose                                             |
-| :---------------- | :-------------------------- | :-------------------------------------------------- |
-| **Frontend**      | **Next.js 16 (React 19)**   | Server Actions, RSC, and Client Components          |
-| **Styling**       | **Tailwind CSS 4**          | Zero-runtime styling with CSS variables             |
-| **State**         | **Tanstack Query**          | Async state management and caching                  |
-| **Canvas**        | **React Zoom Pan Pinch**    | Infinite canvas interactions for design editing     |
-| **AI LLM**        | **Google Gemini 2.0 Flash** | High-speed, reasoning-capable model via OpenRouter  |
-| **Orchestration** | **Inngest**                 | Durable execution, retries, and step-function flows |
-| **Database**      | **Prisma + PostgreSQL**     | Type-safe data access and persistance               |
-| **Validation**    | **Zod**                     | Runtime schema validation for AI structured outputs |
+This project leverages a bleeding-edge stack designed for **speed**, **type-safety**, and **autonomous agent capabilities**.
+
+#### 1. Core Framework: [Next.js 16 (React 19)](https://nextjs.org/)
+
+- **Purpose**: Provides the hybrid runtime for Server Components (RSC) and Client interactive islands.
+- **Implementation**:
+  - Uses **Server Actions** (`app/action/action.ts`) for mutation logic like generating project names instantly.
+  - Leverages **App Router** for nested layouts, critical for the dashboard/canvas split.
+  - React 19 features are used for optimized rendering, especially in the high-frequency updates on the canvas.
+
+#### 2. Styling Engine: [Tailwind CSS 4.0](https://tailwindcss.com/)
+
+- **Purpose**: Zero-runtime styling with a utility-first approach.
+- **Implementation**:
+  - **Native CSS Variables**: The theming system (`lib/themes.ts`) injects CSS variables (`--primary`, `--background`) directly into the DOM.
+  - **JIT Compilation**: Tailwind 4's new engine compiles styles instantly, allowing the AI to generate arbitrary, valid classes that work immediately without a build step.
+
+#### 3. AI & Orchestration: [Google Gemini 2.0 Flash](https://deepmind.google/technologies/gemini/) + [Inngest](https://www.inngest.com/)
+
+- **Purpose**: "Gemini Flash" offers the best reasoning-to-latency ratio for complex layout generation. "Inngest" manages the long-running, multi-step generation workflows.
+- **Implementation**:
+  - **Step Functions**: We use `step.run()` to break generation into "Analysis" and "Execution" phases. If one step fails, Inngest retries just that step, not the whole job.
+  - **Tool Calling**: The AI has access to tools like `searchUnsplash` (`inngest/tool.ts`), allowing it to fetch real, context-aware imagery during the generation process.
+
+#### 4. Database & State: [Prisma](https://www.prisma.io/) + [PostgreSQL](https://www.postgresql.org/)
+
+- **Purpose**: Robust, relational data consistency for complex relationships (User -> Projects -> Frames).
+- **Implementation**:
+  - **Schema-First**: The `schema.prisma` serves as the single source of truth.
+  - **Type Safety**: Prisma Client auto-generates TypeScript types, ensuring that the frontend content never desyncs from the database schema.
+
+#### 5. Authentication: [Kinde](https://kinde.com/)
+
+- **Purpose**: Offloads critical security flows (OAuth, Sessions, MFA) to a specialized provider.
+- **Implementation**:
+  - Middleware-protected routes ensure only authenticated users can access `/dashboard`.
+  - Seamlessly passes user context to Inngest functions via event payloads.
+
+#### 6. Canvas Interactivity: [React-Zoom-Pan-Pinch](https://github.com/prc5/react-zoom-pan-pinch)
+
+- **Purpose**: Enables the "infinite canvas" experience similar to Figma.
+- **Implementation**:
+  - Wraps the generated HTML content in a transform layer.
+  - Decouples the preview's coordination space from the actual DOM flow, allowing users to zoom into specific UI details without breaking the layout.
 
 ---
 
