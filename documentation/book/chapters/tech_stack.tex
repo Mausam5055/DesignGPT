@@ -1,0 +1,85 @@
+\chapter{Technology Stack}
+
+This project leverages a bleeding-edge stack designed for \textbf{speed}, \textbf{type-safety}, and \textbf{autonomous agent capabilities}.
+
+\section{Core Framework: Next.js 16 (React 19)}
+
+\begin{itemize}
+    \item \textbf{Purpose}: Provides the hybrid runtime for Server Components (RSC) and Client interactive islands.
+    \item \textbf{Implementation}:
+    \begin{itemize}
+        \item Uses \textbf{Server Actions} (\texttt{app/action/action.ts}) for mutation logic.
+        \item Leverages \textbf{App Router} for nested layouts.
+        \item React 19 features are used for optimized rendering.
+    \end{itemize}
+\end{itemize}
+
+\section{Styling Engine: Tailwind CSS 4.0}
+
+\begin{itemize}
+    \item \textbf{Purpose}: Zero-runtime styling with a utility-first approach.
+    \item \textbf{Implementation}:
+    \begin{itemize}
+        \item \textbf{Native CSS Variables}: The theming system injects CSS variables directly into the DOM.
+        \item \textbf{JIT Compilation}: Instant compilation allowing the AI to generate arbitrary, valid classes.
+    \end{itemize}
+\end{itemize}
+
+\section{AI \& Orchestration}
+\textbf{Google Gemini 2.0 Flash + Inngest}
+
+\begin{itemize}
+    \item \textbf{Gemini Flash}: Offers the best reasoning-to-latency ratio for complex layout generation.
+    \item \textbf{Inngest}: Manages long-running, multi-step generation workflows.
+    \item \textbf{Tool Calling}: AI has access to external tools like \texttt{searchUnsplash}.
+\end{itemize}
+
+\section{Database \& State}
+\section{Database & State}
+\textbf{Prisma + MongoDB}
+
+The project uses Prisma as an ORM. While the typical stack is PostgreSQL, we use **MongoDB** for its flexibility with JSON-like document structures which are common in AI responses.
+
+\subsection{Schema Design}
+
+The data model is deliberately simple to reduce friction.
+
+\begin{lstlisting}[language=c, caption=Prisma Schema]
+model Project {
+    id        String @id @default(auto()) @map("_id") @db.ObjectId
+    userId    String
+    name      String
+    theme     String?
+    thumbnail String?
+    frames    Frame[]
+    
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Frame {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    title       String
+    htmlContent String   // Stores the raw HTML output
+    projectId   String
+    project     Project  @relation(fields: [projectId], references: [id])
+    
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+\end{lstlisting}
+
+\begin{itemize}
+    \item \textbf{Project}: Top-level container. One-to-many relationship with Frames.
+    \item \textbf{Frame}: Stores the generated HTML blob. We store full HTML strings rather than JSON components.
+\end{itemize}
+
+\section{Authentication}
+\textbf{Kinde}
+
+\textbf{Kinde} was chosen over NextAuth for better developer experience with features like:
+\begin{itemize}
+    \item Built-in User Management Dashboard.
+    \item "Passwordless" magic link support out of the box.
+    \item Easier token handling for server-side API calls to pass user context to Inngest.
+\end{itemize}

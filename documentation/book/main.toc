@@ -1,0 +1,41 @@
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}What is DesignGPT?}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Key Capabilities}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Project Status}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}The Concept}{3}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Target Audience}{4}{section.1.5}%
+\contentsline {section}{\numberline {1.6}The Long-Term Vision}{4}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Roadmap}{4}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Advanced Features}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Intelligent Generation Engine}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Deep Dive: The Logician Agent}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Deep Dive: The Creative Agent}{5}{subsection.2.1.2}%
+\contentsline {section}{\numberline {2.2}Design Tools Integration}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Tool Use: Unsplash API}{6}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}Real-Time Experience}{6}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Optimistic UI & Websockets}{6}{subsection.2.3.1}%
+\contentsline {section}{\numberline {2.4}Security First}{6}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Professional Design System}{6}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Enterprise-Grade Architecture}{7}{section.2.6}%
+\contentsline {chapter}{\numberline {3}System Architecture}{8}{chapter.3}%
+\contentsline {section}{\numberline {3.1}The Generation Pipeline}{8}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Workflow Details}{8}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Code Spotlight: The Inngest Function}{9}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Data Models}{9}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Technology Stack}{10}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Core Framework: Next.js 16 (React 19)}{10}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Styling Engine: Tailwind CSS 4.0}{10}{section.4.2}%
+\contentsline {section}{\numberline {4.3}AI \& Orchestration}{10}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Database \& State}{11}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Database & State}{11}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Schema Design}{11}{subsection.4.5.1}%
+\contentsline {section}{\numberline {4.6}Authentication}{11}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Getting Started Guide}{12}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Prerequisites}{12}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Installation}{12}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Configuration}{12}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Running the Application}{13}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Troubleshooting}{13}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Database Connection Errors}{13}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Inngest Not Picking Up Events}{13}{subsection.5.5.2}%
+\contentsline {subsection}{\numberline {5.5.3}AI Timeouts}{13}{subsection.5.5.3}%

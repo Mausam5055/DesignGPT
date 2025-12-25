@@ -1,0 +1,46 @@
+\documentclass[11pt, oneside, openany]{book}
+\input{structure}
+
+\begin{document}
+
+% --- Front Cover ---
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+  % Background Gradient
+  \fill[left color=primaryBlue!90!black, right color=secondaryPurple!90!black] 
+    (current page.south west) rectangle (current page.north east);
+    
+  % Abstract Shapes
+  \fill[white!10] (current page.north east) circle (10cm);
+  \fill[white!5] (current page.south west) circle (8cm);
+  
+  % Title Box
+  \node[draw=none, align=center, text=white] at ($(current page.center) + (0, 2)$) {
+    \fontsize{40}{48}\selectfont \textbf{DesignGPT} \\[1cm]
+    \fontsize{20}{24}\selectfont \textit{AI-Native Design Platform}
+  };
+  
+  % Author
+  \node[draw=none, text=white] at ($(current page.south) + (0, 4)$) {
+    \Large \textbf{Author: Mausam Kar}
+  };
+  
+  % Version/Date
+  \node[draw=none, text=white!80] at ($(current page.south) + (0, 2)$) {
+    \large Documentation Release v1.0 \\ \today
+  };
+\end{tikzpicture}
+\end{titlepage}
+
+% --- Front Matter ---
+\tableofcontents
+\newpage
+
+% --- Main Content ---
+\input{chapters/introduction}
+\input{chapters/features}
+\input{chapters/architecture}
+\input{chapters/tech_stack}
+\input{chapters/installation}
+
+\end{document}

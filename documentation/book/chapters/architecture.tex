@@ -1,0 +1,101 @@
+\chapter{System Architecture}
+
+DesignGPT employs a specialized multi-agent workflow to ensure high-quality output. The architecture is designed to be event-driven, scalable, and resilient.
+
+\section{The Generation Pipeline}
+
+The following diagram illustrates the flow of data from the initial user request to the final UI generation.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=1.5cm and 2cm,
+    box/.style={rectangle, draw=primaryBlue, thick, rounded corners, minimum height=1cm, minimum width=2.5cm, align=center, fill=white},
+    db/.style={cylinder, draw=black!70, shape border rotate=90, aspect=0.25, minimum height=1.5cm, minimum width=1.5cm, align=center, fill=lightGray},
+    arrow/.style={-Latex, thick, darkGray}
+]
+
+% Nodes
+\node[box, fill=green!10] (user) {User Request};
+\node[box, right=of user] (api) {Next.js API};
+\node[box, right=of api, fill=orange!10] (inngest) {Inngest Queue};
+
+\node[box, below=of inngest, xshift=-2cm] (analyzer) {Logician Agent\\(Analyzer)};
+\node[box, below=of analyzer] (planner) {Planner\\(JSON Schema)};
+
+\node[box, left=of planner, xshift=-1cm] (generator) {Creative Agent\\(Generator)};
+\node[box, left=of generator] (unsplash) {Unsplash API};
+\node[box, below=of generator] (history) {Previous Screens\\(Context)};
+
+\node[db, right=of generator, xshift=1cm] (db) {Postgres DB};
+\node[box, right=of db] (client) {Client Dashboard\\(UI)};
+
+% Edges
+\draw[arrow] (user) -- node[above, font=\small] {Submit} (api);
+\draw[arrow] (api) -- node[above, font=\small] {Event: ui/generate} (inngest);
+\draw[arrow] (inngest) |- node[right, font=\small, pos=0.3] {Step 1} (analyzer);
+\draw[arrow] (analyzer) -- node[right, font=\small] {Plan} (planner);
+\draw[arrow] (planner) -- node[above, font=\small] {Loop} (generator);
+
+\draw[arrow] (generator) -- node[above, font=\small] {Fetch Assets} (unsplash);
+\draw[arrow] (history) -- node[right, font=\small] {Inject Context} (generator);
+
+\draw[arrow] (generator) -- node[above, font=\small] {Stream HTML} (db);
+\draw[arrow] (db) -- node[above, font=\small] {Real-time Event} (client);
+
+% Dashed container
+\draw[dashed, color=gray] ($(analyzer.north east)+(0.5,0.5)$) rectangle ($(history.south west)+(-0.5,-0.5)$);
+\node[anchor=south east, color=gray] at ($(analyzer.north east)+(0.5,0.5)$) {Design Agent Workflow};
+
+\end{tikzpicture}
+\caption{DesignGPT Generation Pipeline Architecture}
+\label{fig:architecture}
+\end{figure}
+
+\section{Workflow Details}
+\begin{enumerate}
+    \item \textbf{Submission}: The user submits a prompt via the Client Dashboard.
+    \item \textbf{Queueing}: The API triggers an Inngest event, offloading the work to a background worker.
+    \item \textbf{Analysis}: The \textit{Logician Agent} analyzes the prompt and existing screens to ensure consistency.
+    \item \textbf{Planning}: A plan is generated in JSON format, outlining specific screens and their purposes.
+    \item \textbf{Generation}: The \textit{Creative Agent} executes the plan, iterating through screens. It fetches assets from Unsplash and maintains context from previous generations.
+\item \textbf{Streaming}: The generated code is saved to the Postgres database, which pushes updates to the Client Dashboard in real-time.
+\end{enumerate}
+
+\section{Code Spotlight: The Inngest Function}
+
+The core orchestration happens within `inngest/functions/generateScreens.ts`. This function defines the multi-step workflow.
+
+\begin{lstlisting}[language=TypeScript, caption=Inngest Step Function Structure]
+export const generateScreens = inngest.createFunction(
+  { id: "generate-ui-screens" },
+  { event: "ui/generate.screens" },
+  async ({ event, step, publish }) => {
+    // 1. Analyze and Plan
+    const analysis = await step.run("analyze-and-plan-screens", async () => {
+      // ... calls Gemini with AnalysisSchema
+    });
+
+    // 2. Execution Loop
+    for (let i = 0; i < analysis.screens.length; i++) {
+      await step.run(`generated-screen-${i}`, async () => {
+         // ... calls Gemini with Tool Use (Unsplash)
+         // ... Generates HTML
+         // ... Saves to Prisma DB
+      });
+    }
+  }
+);
+\end{lstlisting}
+
+This `step.run` architecture is vital. It allows the long-running generation process (which can take 30-60 seconds for multiple screens) to be reliable. If the generation of Screen 2 fails, Inngest retries \textit{only} Screen 2, without re-running the analysis or regenerating Screen 1.
+
+\section{Data Models}
+
+The application relies on a robust schema to track projects and frames.
+
+\begin{itemize}
+    \item \textbf{Project}: The container for a design session. Stores the `theme` and ownership `userId`.
+    \item \textbf{Frame}: Represents a single screen. Stores the `htmlContent` and `title`.
+\end{itemize}
+

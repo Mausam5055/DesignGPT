@@ -1,0 +1,82 @@
+\chapter{Advanced Features}
+
+DesignGPT is packed with features designed to make the design process seamless and professional.
+
+\section{Intelligent Generation Engine}
+
+At the heart of DesignGPT lies a sophisticated AI engine powered by \textbf{Google Gemini 2.0 Flash}.
+
+\begin{itemize}[label=\textcolor{primaryBlue}{\textbullet}]
+    \item \textbf{Context-Aware Design}: The system analyzes your request to determine consistency with existing screens, ensuring a cohesive look and feel across the entire application.
+    \item \textbf{Automated Planning}: Before writing a single line of code, the AI explicitly plans the App Structure, defining User Flows and Screen Purposes.
+    \item \textbf{Smart Remediation}: Need a change? The \texttt{regenerateFrame} function understands visual context, preserving your layout while applying specific edits.
+\end{itemize}
+
+\subsection{Deep Dive: The Logician Agent}
+The "Logician" agent is responsible for the initial analysis. It uses a Zod schema to enforce structured output, ensuring that every generated design has clarity and purpose.
+
+\begin{infobox}[Analysis Schema]
+The agent outputs a JSON object containing:
+\begin{itemize}
+    \item \textbf{Theme}: Visual theme ID (e.g., 'midnight', 'ocean-breeze').
+    \item \textbf{Screens}: An array of objects, each with a unique ID, descriptive name, purpose statement, and a dense visual description.
+\end{itemize}
+\end{infobox}
+
+The \texttt{visualDescription} field is critical. It acts as a high-fidelity directive for the subsequent creative agent, describing layout, specific data examples, component hierarchy, and physical attributes like "Chunky cards" or "Floating header".
+
+\subsection{Deep Dive: The Creative Agent}
+Once the plan is set, the "Creative" agent takes over. It iterates through the planned screens, generating the actual HTML/Tailwind code. Crucially, it is \textbf{state-aware}. It receives the context of all previously generated screens to ensure consistency in navigation, typography, and spacing.
+
+\section{Design Tools Integration}
+
+DesignGPT isn't limited to just its own internal knowledge. It reaches out to the world to make designs realistic.
+
+\subsection{Tool Use: Unsplash API}
+To avoid the "lorem ipsum" placeholder effect, the agents are equipped with the \texttt{searchUnsplash} tool. 
+\begin{enumerate}
+    \item The agent infers the context (e.g., "Sushi Restaurant").
+    \item It calls the tool with a query like \texttt{"california roll high res"}.
+    \item The returned image URL is directly embedded into the \texttt{<img>} tags of the generated design.
+\end{enumerate}
+This results in designs that feel "lived-in" and finished from the very first moment.
+
+\section{Real-Time Experience}
+
+We prioritize user feedback loops over raw speed.
+
+\subsection{Optimistic UI & Websockets}
+While the backend (Inngest) processes the heavy AI workload, the frontend remains responsive.
+\begin{itemize}
+    \item **Step-by-Step Feeds**: As soon as a screen is generated, it is pushed to the client. The user doesn't wait for the entire app to be finished before seeing the first screen.
+    \item **Live Status**: The "Analyzer" and "Generator" states are broadcasted, so the user sees exactly what the AI is "thinking" (e.g., "Planning Navigation", "Selecting Theme").
+\end{itemize}
+
+\section{Security First}
+Integrated with \textbf{Kinde Auth}, the platform ensures:
+\begin{itemize}
+    \item Secure OAuth2.0 authentication.
+    \item JWT-based session management.
+    \item User-scoped data isolation (users can only see their own projects).
+\end{itemize}
+
+
+\section{Professional Design System}
+
+We believe that AI-generated designs should essentially look handcrafted by a top-tier designer.
+
+\begin{itemize}[label=\textcolor{secondaryPurple}{\textbullet}]
+    \item \textbf{Dynamic Theming}: The system automatically selects and applies visual themes (e.g., Midnight, Ocean Breeze) or extracts them directly from your prompt.
+    \item \textbf{Tailwind v4 Native}: All generated code is pure, utility-first Tailwind CSS. This makes it instantly copy-pasteable into your own projects without complex build configurations.
+    \item \textbf{Unsplash Integration}: Through tool calling, the agent automatically populates designs with high-quality, relevant stock imagery from Unsplash.
+\end{itemize}
+
+\section{Enterprise-Grade Architecture}
+
+Built for scale and reliability.
+
+\begin{itemize}[label=\textcolor{darkGray}{\textbullet}]
+    \item \textbf{Event-Driven Backend}: Heavy AI tasks are offloaded to \textbf{Inngest} serverless queues, ensuring the UI never freezes even during complex generations.
+    \item \textbf{Real-Time Websockets}: Users can watch their designs appear component-by-component with optimistic UI updates.
+    \item \textbf{Secure Authentication}: Fully integrated with \textbf{Kinde} for secure, passwordless authentication flows.
+\end{itemize}

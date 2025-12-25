@@ -1,0 +1,95 @@
+\chapter{Getting Started Guide}
+
+\section{Prerequisites}
+
+Before you begin, ensure you have the following installed:
+\begin{itemize}
+    \item Node.js 18+
+    \item PostgreSQL Database URL
+    \item Kinde Auth Account
+    \item OpenRouter API Key
+\end{itemize}
+
+\section{Installation}
+
+\begin{enumerate}
+    \item \textbf{Clone the repository}
+\begin{lstlisting}[language=bash]
+git clone https://github.com/mausamkar/xdesign-ai.git
+cd xdesign-ai
+\end{lstlisting}
+
+    \item \textbf{Install dependencies}
+\begin{lstlisting}[language=bash]
+npm install
+\end{lstlisting}
+\end{enumerate}
+
+\section{Configuration}
+
+Create a \texttt{.env} file in the root directory and configure your keys:
+
+\begin{lstlisting}
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/designgpt"
+
+# Authentication (Kinde)
+KINDE_CLIENT_ID="your_client_id"
+KINDE_CLIENT_SECRET="your_client_secret"
+KINDE_ISSUER_URL="https://your-app.kinde.com"
+KINDE_SITE_URL="http://localhost:3000"
+KINDE_POST_LOGOUT_REDIRECT_URL="http://localhost:3000"
+KINDE_POST_LOGIN_REDIRECT_URL="http://localhost:3000/dashboard"
+
+# AI & Services
+OPENROUTER_API_KEY="sk-or-..."
+INNGEST_EVENT_KEY="test_key"
+INNGEST_SIGNING_KEY="test_signing_key"
+\end{lstlisting}
+
+\section{Running the Application}
+
+DesignGPT requires two concurrent processes:
+
+\textbf{1. The Application (Next.js)}
+\begin{lstlisting}[language=bash]
+npm run dev
+# Running at http://localhost:3000
+\end{lstlisting}
+
+\textbf{2. The Worker (Inngest)}
+\begin{lstlisting}[language=bash]
+npx inngest-cli@latest dev
+# Running at http://localhost:8288
+\end{lstlisting}
+
+\begin{infobox}[Ready to Design]
+Once both processes are running, navigate to \texttt{http://localhost:3000} to start generating designs!
+\end{infobox}
+
+\section{Troubleshooting}
+
+Here are some common issues you might encounter:
+
+\subsection{Database Connection Errors}
+If you see \texttt{PrismaClientInitializationError}:
+\begin{itemize}
+    \item Ensure your MongoDB connection string in \texttt{.env} is correct.
+    \item If using a local DB, ensure the service is running.
+    \item Verify that you have run \texttt{npx prisma db push} to sync the schema.
+\end{itemize}
+
+\subsection{Inngest Not Picking Up Events}
+If the AI generation never starts:
+\begin{itemize}
+    \item Check that the Inngest Dev Server is running in a separate terminal.
+    \item Ensure the application is pointing to the local Inngest instance (default behavior in dev).
+    \item Check the "Events" tab in the Inngest dashboard (\texttt{http://localhost:8288}) to see if events like \texttt{ui/generate.screens} are being received.
+\end{itemize}
+
+\subsection{AI Timeouts}
+If the generation hangs:
+\begin{itemize}
+    \item Large prompts may take longer than the default timeout. 
+    \item Check your OpenRouter credits/API key status.
+\end{itemize}

@@ -1,0 +1,90 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc, shapes, shadows, arrows.meta, positioning}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, listings}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage{enumitem}
+
+% Colors
+\definecolor{primaryBlue}{HTML}{0070f3} % Next.js blue style
+\definecolor{secondaryPurple}{HTML}{7928CA} % Purple style
+\definecolor{tailwindTeal}{HTML}{38B2AC}
+\definecolor{darkGray}{HTML}{1A202C}
+\definecolor{lightGray}{HTML}{F7FAFC}
+
+% Hyperlink styling
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryBlue,
+    filecolor=secondaryPurple,      
+    urlcolor=primaryBlue,
+    pdftitle={DesignGPT Documentation},
+    pdfpagemode=FullScreen,
+}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\color{gray!50}DesignGPT - Mausam Kar}%
+  \fancyfoot[R]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{\color{gray!50}DesignGPT - Mausam Kar}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\setlength{\headheight}{14pt}
+
+% Chapter Styling
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{darkGray}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge\color{primaryBlue}}
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+
+% Section Styling
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{secondaryPurple}}
+  {\thesection}{1em}{}
+
+% Code Listings
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  backgroundcolor=\color{lightGray},
+  frame=single,
+  rulecolor=\color{black!10},
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red}
+}
+
+% Box for Highlights
+\newtcolorbox{infobox}[1][]{
+  colback=blue!5!white,
+  colframe=primaryBlue,
+  fonttitle=\bfseries,
+  title=#1
+}
+
+\newtcolorbox{warningbox}[1][]{
+  colback=red!5!white,
+  colframe=red!75!black,
+  fonttitle=\bfseries,
+  title=#1
+}
