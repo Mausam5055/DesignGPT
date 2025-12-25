@@ -1,6 +1,8 @@
 {
   "name": "xdesign-ai",
   "version": "0.1.0",
+  "description": "A production-ready AI design agent that generates high-fidelity, editable, and consistent mobile UI mockups from text prompts.",
+  "author": "Mausam Kar",
   "private": true,
   "scripts": {
     "dev": "next dev",
