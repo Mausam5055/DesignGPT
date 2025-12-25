@@ -1,0 +1,20 @@
+# Database
+DATABASE_URL="mongodb+srv://rikikumkar_db_user:toap0M7HdYHowK1O@cluster0.dep97bq.mongodb.net/designgpt?appName=Cluster0"
+
+# Authentication (Kinde)
+KINDE_CLIENT_ID="40a429c7ad6745cc80db078d899a02f8"
+KINDE_CLIENT_SECRET="wYpQhmcNO3WXdcNInL32CCl9vaNDWJHFtc2gyGGC59ZP21Kjim1K"
+KINDE_ISSUER_URL="https://mausam.kinde.com"
+KINDE_SITE_URL="http://localhost:3000"
+KINDE_POST_LOGOUT_REDIRECT_URL="http://localhost:3000"
+KINDE_POST_LOGIN_REDIRECT_URL="http://localhost:3000/dashboard"
+
+# AI Services
+OPENROUTER_API_KEY="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"
+
+# Integrations
+UNSPLASH_ACCESS_KEY="tIVHzQFm6TRaQ9K-95ho-hBLp7H1MIRSxXQWdVxM8N4"
+
+# Environment
+NODE_ENV="development"
+# VERCEL="1" # Uncomment if deploying to Vercel or simulating Vercel environment
