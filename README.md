@@ -1,209 +1,201 @@
 # DesignGPT (xdesign-ai)
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Next.js](https://img.shields.io/badge/Next.js-16.0-black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC)
-![Prisma](https://img.shields.io/badge/Prisma-6.0-2D3748)
-![Inngest](https://img.shields.io/badge/Inngest-3.0-white)
-
-**DesignGPT** is a powerful, AI-driven design generation platform that empowers users to create and iterate on user interface designs effortlessly. By leveraging advanced LLMs and background processing workflows, DesignGPT transforms text prompts into editable, high-fidelity UI components.
-
-## 📸 Previews
-
 <div align="center">
-  <img src="./public/preview1.png" alt="Dashboard Preview" width="45%" />
-  <img src="./public/preview2.png" alt="Canvas Preview" width="45%" />
+
+![License](https://img.shields.io/github/license/mausamkar/xdesign-ai?style=for-the-badge&color=blue)
+![Version](https://img.shields.io/badge/version-0.1.0-orange?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-active-success?style=for-the-badge)
+
+![Next.js](https://img.shields.io/badge/Next.js_16-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Prisma](https://img.shields.io/badge/Prisma-6.0-2D3748?style=for-the-badge&logo=prisma&logoColor=white)
+![Inngest](https://img.shields.io/badge/Inngest-3.0-white?style=for-the-badge&logo=inngest&logoColor=050505)
+
+![Gemini](https://img.shields.io/badge/Gemini_2.0_Flash-8E75B2?style=for-the-badge&logo=google-gemini&logoColor=white)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-API-7D55C7?style=for-the-badge&logo=openai&logoColor=white)
+![Kinde](https://img.shields.io/badge/Kinde-Auth-black?style=for-the-badge&logo=kinde&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+
 </div>
 
 ---
 
-## 🚀 Key Features
+**DesignGPT** is a production-ready, AI-native design platform that transforms natural language descriptions into high-fidelity, editable UI mockups. Describe your idea, and DesignGPT's autonomous agents will analyze, plan, and generate a multi-screen mobile application design in real-time.
 
-| Feature                      | Description                                                                                                    |
-| :--------------------------- | :------------------------------------------------------------------------------------------------------------- |
-| **🤖 AI Design Generation**  | Generate comprehensive UI designs from simple text prompts using state-of-the-art LLMs.                        |
-| **🎨 Interactive Canvas**    | A fully zoomable and pannable canvas (powered by `react-zoom-pan-pinch` and `react-rnd`) for detailed editing. |
-| **🔄 Background Workflows**  | Robust job processing with **Inngest** for reliable, long-running generation tasks without blocking the UI.    |
-| **⚡ Real-time Updates**     | Seamless usage with optimistic UI updates and real-time feedback loops.                                        |
-| **🔐 Secure Authentication** | Enterprise-grade authentication integrated via **Kinde Auth**.                                                 |
-| **📱 Responsive Features**   | Optimized for various screen sizes with a mobile-first approach.                                               |
-| **📸 Screenshot & Export**   | Built-in capabilities to capture and export your designs using Puppeteer.                                      |
+## 📸 Interactive Previews
+
+<div align="center">
+  <img src="./public/preview1.png" alt="Dashboard Dashboard" width="48%" style="border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" />
+  <img src="./public/preview2.png" alt="Design Canvas" width="48%" style="border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" />
+</div>
 
 ---
 
-## 🛠️ Architecture
+## 🚀 Advanced Features
 
-DesignGPT is built on a modern event-driven architecture. The frontend communicates with the backend via API routes, which trigger asynchronous jobs in Inngest for heavy lifting (AI generation), keeping the user experience snappy.
+### 🧠 Intelligent Generation Engine
+
+- **Context-Aware Design**: Utilizing `google/gemini-2.0-flash-001`, the system analyzes your request to determine consistency with existing screens.
+- **Automated Planning**: The AI explicitly plans the App Structure (User Flow, Screen Purpose) before writing a single line of code.
+- **Smart Remediation**: Need a change? The `regenerateFrame` function understands visual context, preserving your layout while applying specific edits.
+
+### 🎨 Professional Design System
+
+- **Dynamic Theming**: Automatically selects and applies visual themes (e.g., Midnight, Ocean Breeze) or extracts them from your prompt.
+- **Tailwind v4 Native**: All generated code is pure, utility-first Tailwind CSS, making it instantly copy-pasteable into your own projects.
+- **Unsplash Integration**: Automatically populates designs with high-quality, relevant stock imagery via tool calling.
+
+### ⚡ Enterprise-Grade Architecture
+
+- **Event-Driven Backend**: Heavy AI tasks are offloaded to **Inngest** serverless queues, ensuring the UI never freezes.
+- **Real-Time Websockets**: Watch your designs appear component-by-component with optimistic UI updates.
+- **Secure Authentication**: Fully integrated with **Kinde** for secure, passwordless authentication flows.
+
+---
+
+## 🛠️ System Architecture
+
+DesignGPT employs a specialized multi-agent workflow to ensure high-quality output.
+
+### The Generation Pipeline
 
 ```mermaid
 graph TD
-    User[User] -->|Interacts| Frontend[Next.js Frontend]
-    Frontend -->|Auth| Kinde[Kinde Auth]
-    Frontend -->|API Calls| API[API Routes]
+    User[User Request] -->|Submit| API[Next.js API]
+    API -->|Event: ui/generate.screens| Inngest
 
-    subgraph Backend Services
-        API -->|Database Ops| Prisma[(Prisma / DB)]
-        API -->|Trigger Events| Inngest[Inngest Event Bus]
+    subgraph "Design Agent Workflow"
+        Inngest -->|Step 1| Analyzer[Logician Agent]
+        Analyzer -->|Plan Screens & Theme| Planner[JSON Schema Output]
 
-        Inngest -->|Triggers| Func1[Generate Screens Function]
-        Inngest -->|Triggers| Func2[Regenerate Frame Function]
+        Planner -->|Loop for each Screen| Generator[Creative Agent]
+        Generator -->|Fetch Assets| Unsplash[Unsplash API]
+        Generator -->|Context| History[Previous Screens]
 
-        Func1 -->|Call LLM| AI[OpenRouter / AI SDK]
-        Func2 -->|Call LLM| AI
-
-        Func1 -->|Update DB| Prisma
-        Func2 -->|Update DB| Prisma
+        History -->|Inject Consistency| Generator
+        Generator -->|Stream HTML| DB[(Postgres Database)]
     end
 
-    subgraph "Canvas & Tools"
-        Frontend -->|Render| Canvas[Interactive Canvas]
-    end
+    DB -->|Real-time Event| UI[Client Dashboard]
 ```
 
-### Inngest Workflows
+### Component Stack
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant A as API
-    participant I as Inngest
-    participant L as LLM
-    participant D as Database
-
-    U->>A: "Design a login page"
-    A->>I: Send "app/generate.screens" Event
-    A-->>U: 202 Accepted (Job Started)
-
-    loop Background Process
-        I->>L: Generate Component Code
-        L-->>I: Return JSON/TSX
-        I->>D: Save Component Data
-    end
-
-    I-->>U: (Real-time / Polling) Update UI
-    U->>U: View Generated Design
-```
+| Layer             | Technology                  | Purpose                                             |
+| :---------------- | :-------------------------- | :-------------------------------------------------- |
+| **Frontend**      | **Next.js 16 (React 19)**   | Server Actions, RSC, and Client Components          |
+| **Styling**       | **Tailwind CSS 4**          | Zero-runtime styling with CSS variables             |
+| **State**         | **Tanstack Query**          | Async state management and caching                  |
+| **Canvas**        | **React Zoom Pan Pinch**    | Infinite canvas interactions for design editing     |
+| **AI LLM**        | **Google Gemini 2.0 Flash** | High-speed, reasoning-capable model via OpenRouter  |
+| **Orchestration** | **Inngest**                 | Durable execution, retries, and step-function flows |
+| **Database**      | **Prisma + PostgreSQL**     | Type-safe data access and persistance               |
+| **Validation**    | **Zod**                     | Runtime schema validation for AI structured outputs |
 
 ---
 
-## 🧰 Tech Stack
-
-### Core
-
-- **Framework:** [Next.js 16](https://nextjs.org/) (React 19)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
-- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
-- **Components:** [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/)
-
-### Backend & Data
-
-- **Database ORM:** [Prisma](https://www.prisma.io/)
-- **Auth:** [Kinde](https://kinde.com/)
-- **Background Jobs:** [Inngest](https://www.inngest.com/)
-- **API Handling:** [Axios](https://axios-http.com/), [Tanstack Query](https://tanstack.com/query/latest)
-
-### AI & Automation
-
-- **AI SDK:** [Vercel AI SDK](https://sdk.vercel.ai/docs)
-- **LLM Provider:** OpenRouter
-- **Headless Browser:** Puppeteer Core / Sparticuz Chromium
-
----
-
-## 🏁 Getting Started
+## 🏁 Getting Started Guide
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or pnpm
-- PostgreSQL Database (or a hosted provider like Neon/Supabase)
+- Node.js 18+ established
+- PostgreSQL Database URL
+- Kinde Auth Account
+- OpenRouter API Key
 
-### Installation
+### 1. Installation
 
-1. **Clone the repository**
+```bash
+# Clone the repository
+git clone https://github.com/mausamkar/xdesign-ai.git
 
-   ```bash
-   git clone https://github.com/yourusername/xdesign-ai.git
-   cd xdesign-ai
-   ```
+# Navigate to project root
+cd xdesign-ai
 
-2. **Install dependencies**
+# Install dependencies with legacy peer deps if needed
+npm install
+```
 
-   ```bash
-   npm install
-   ```
+### 2. Configuration forms (.env)
 
-3. **Environment Setup**
-   Create a `.env` file in the root directory based on `.env.example`:
+```env
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/designgpt"
 
-   ```env
-   DATABASE_URL="postgresql://..."
-   KINDE_CLIENT_ID="..."
-   KINDE_CLIENT_SECRET="..."
-   KINDE_ISSUER_URL="..."
-   KINDE_SITE_URL="http://localhost:3000"
-   KINDE_POST_LOGOUT_REDIRECT_URL="http://localhost:3000"
-   KINDE_POST_LOGIN_REDIRECT_URL="http://localhost:3000/dashboard"
-   OPENROUTER_API_KEY="..."
-   INNGEST_EVENT_KEY="..."
-   INNGEST_SIGNING_KEY="..."
-   ```
+# Authentication (Kinde)
+KINDE_CLIENT_ID="your_client_id"
+KINDE_CLIENT_SECRET="your_client_secret"
+KINDE_ISSUER_URL="https://your-app.kinde.com"
+KINDE_SITE_URL="http://localhost:3000"
+KINDE_POST_LOGOUT_REDIRECT_URL="http://localhost:3000"
+KINDE_POST_LOGIN_REDIRECT_URL="http://localhost:3000/dashboard"
 
-4. **Initialize Database**
+# AI & Services
+OPENROUTER_API_KEY="sk-or-..."
+INNGEST_EVENT_KEY="test_key"
+INNGEST_SIGNING_KEY="test_signing_key"
+```
 
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
+### 3. Database Migration
 
-5. **Run the Development Server**
-   You need to run both the Next.js dev server and the Inngest dev server.
+```bash
+npx prisma generate
+npx prisma db push
+```
 
-   ```bash
-   # Terminal 1: Next.js
-   npm run dev
+### 4. Launch Development Environment
 
-   # Terminal 2: Inngest
-   npx inngest-cli@latest dev
-   ```
+DesignGPT requires two concurrent processes to function:
 
-6. **Open the App**
-   Visit [http://localhost:3000](http://localhost:3000).
-   The Inngest dashboard is available at [http://localhost:8288](http://localhost:8288).
+**Terminal 1: The Application**
+
+```bash
+npm run dev
+# Running at http://localhost:3000
+```
+
+**Terminal 2: The Worker (Inngest)**
+
+```bash
+npx inngest-cli@latest dev
+# Running at http://localhost:8288
+```
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure Map
 
-```bash
-📦 DesignGPT
-├── 📂 app                 # Next.js App Router (Routes, Layouts, API)
-│   ├── 📂 (routes)        # Application routes
-│   └── 📂 api             # API Endpoints (Inngest, Screenshot, Project)
-├── 📂 components          # Reusable UI Components
-├── 📂 inngest             # Inngest Functions & Config
-│   └── 📂 functions       # Background job definitions (generateScreens, etc.)
-├── 📂 lib                 # Utility libraries (DB, Utils)
-├── 📂 prisma              # Database Schema & Migrations
-├── 📂 public              # Static assets and images
-└── 📄 package.json        # Dependencies and Scripts
+```text
+d:\DesignGPT-
+├── 📂 app                  # Next.js App Router
+│   ├── (dashboard)         # Protected dashboard layout
+│   ├── (routes)            # Public marketing pages
+│   └── api                 # Internal API endpoints
+├── 📂 components           # Reusable UI library
+├── 📂 inngest              # Async workflow definitions
+│   └── 📂 functions        # AI Agent logic (generateScreens.ts)
+├── 📂 lib                  # Core utilities (OpenRouter, Prisma)
+├── 📂 prisma               # Database schema definitions
+└── 📂 public               # Static assets
 ```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+We welcome contributions from the community!
 
-1. Fork the project.
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
+1. **Fork** the repository
+2. Create a **Feature Branch** (`git checkout -b feature/NewMagic`)
+3. **Commit** your changes (`git commit -m 'Add NewMagic'`)
+4. **Push** to the branch (`git push origin feature/NewMagic`)
+5. Open a **Pull Request**
+
+---
 
 ## 📄 License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-**Author:** Mausam Kar
+**Author:** [Mausam Kar](https://github.com/mausamkar)
