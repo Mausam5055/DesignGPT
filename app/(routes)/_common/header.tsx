@@ -28,7 +28,12 @@ const Header = () => {
           className="w-full max-w-6xl mx-auto
          flex items-center justify-between"
         >
-          <Logo />
+          <div className="flex flex-col items-end -space-y-1">
+            <Logo />
+            <span className="text-[10px] font-medium text-muted-foreground">
+              By Mausam Kar
+            </span>
+          </div>
 
           <div
             className="hidden flex-1 items-center

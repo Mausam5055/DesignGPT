@@ -1,6 +1,6 @@
 import { generateText, stepCountIs } from "ai";
 import { inngest } from "../client";
-//import { openrouter } from "@/lib/openrouter";
+import { openrouter } from "@/lib/openrouter";
 import { GENERATION_SYSTEM_PROMPT } from "@/lib/prompt";
 import prisma from "@/lib/prisma";
 import { BASE_VARIABLES, THEME_LIST } from "@/lib/themes";
@@ -40,7 +40,7 @@ export const regenerateFrame = inngest.createFunction(
       `;
 
       const result = await generateText({
-        model: "google/gemini-3-pro-preview",
+        model: openrouter("google/gemini-2.0-flash-001"),
         system: GENERATION_SYSTEM_PROMPT,
         tools: {
           searchUnsplash: unsplashTool,
