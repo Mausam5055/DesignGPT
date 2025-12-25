@@ -45,7 +45,10 @@ const CanvasFloatingToolbar = ({
   return (
     <div
       className="
-   fixed top-6 right-36 z-50
+   fixed 
+   bottom-24 left-1/2 -translate-x-1/2 
+   md:top-6 md:right-36 md:bottom-auto md:left-auto md:translate-x-0
+   z-50
   "
     >
       <div

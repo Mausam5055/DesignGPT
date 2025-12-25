@@ -24,7 +24,7 @@ const Header = ({ projectName }: { projectName?: string }) => {
 
   return (
     <>
-      <div className="fixed top-6 left-6 z-40 flex items-center gap-2 pointer-events-none">
+      <div className="fixed top-6 left-2 md:left-6 z-40 flex items-center gap-2 pointer-events-none">
         <header className="pointer-events-auto h-14 bg-background/80 backdrop-blur-md border rounded-full shadow-sm px-4 flex items-center gap-4">
           <div className="flex items-center gap-2">
             <Logo />
@@ -42,14 +42,14 @@ const Header = ({ projectName }: { projectName?: string }) => {
             >
               <ArrowLeftIcon className="size-4" />
             </Button>
-            <p className="max-w-[200px] truncate font-medium text-sm">
+            <p className="max-w-[100px] md:max-w-[200px] truncate font-medium text-sm">
               {projectName || "Untitled Project"}
             </p>
           </div>
         </header>
       </div>
 
-      <div className="fixed top-6 right-6 z-40 flex items-center gap-2 pointer-events-none">
+      <div className="fixed top-6 right-2 md:right-6 z-40 flex items-center gap-2 pointer-events-none">
         <div className="pointer-events-auto h-14 bg-background/80 backdrop-blur-md border rounded-full shadow-sm px-2 gap-2 flex items-center justify-center">
           <Button
             variant="outline"
