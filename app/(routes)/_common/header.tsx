@@ -22,12 +22,9 @@ const Header = () => {
   const { user } = useKindeBrowserClient();
   const isDark = theme === "dark";
   return (
-    <div className="sticky top-0 right-0 left-0 z-30">
-      <header className="h-16 border-b bg-background py-4">
-        <div
-          className="w-full max-w-6xl mx-auto
-         flex items-center justify-between"
-        >
+    <div className="sticky top-5 z-[100] flex justify-center w-full px-4 pointer-events-none">
+      <header className="pointer-events-auto h-16 bg-background/80 backdrop-blur-md border rounded-full shadow-sm py-2 px-6 w-full max-w-6xl flex items-center justify-between">
+        <div className="flex items-center justify-between w-full">
           <div className="flex flex-col items-end -space-y-1">
             <Logo />
             <span className="text-[10px] font-medium text-muted-foreground">
