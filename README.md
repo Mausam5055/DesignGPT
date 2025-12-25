@@ -1,4 +1,4 @@
-# DesignGPT (xdesign-ai)
+# DesignGPT
 
 <div align="center">
 
